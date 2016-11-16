@@ -37,12 +37,13 @@ export class AnalyticalDataManager {
     getInitialData() {
         switch(this.groupingOrder.hasItems) {
             case true:
-                return this.getGroupingRecords(this.groupingOrder.firstItem, this.data);
+                return this.getRootGroupingRecords(this.groupingOrder.firstItem, this.data);
             case false:
                 return this.getDataRecords(this.data);
         }
     }
 
+    // Get all items that are allowed throught the filter
     getDataRecords(dataToProcess) {
         const result = [];
 
@@ -66,11 +67,18 @@ export class AnalyticalDataManager {
         return result;
     }
 
-    getGroupingRecords(grouping, dataToProcess) {
+    // Get data according to the grouping
+    getRootGroupingRecords() {
         const set = new Set();
         const result = [];
 
-        for(let dataItem of dataToProcess) {
+        if (!this.groupingOrder.hasItems) {
+            return result;
+        }
+
+        const grouping = this.groupingOrder.firstItem;
+
+        for(let dataItem of this.data) {
             const value = dataItem[grouping.field];
 
             if (set.has(value)) {
@@ -81,21 +89,50 @@ export class AnalyticalDataManager {
 
             if (this.filter) {
                 if (this.filter.allow(dataItem)) {
-                    groupingRecord = new GroupingRecord(dataItem);
+                    groupingRecord = new GroupingRecord(dataItem, 0, grouping.field, value);
                 }
             }
             else {
-                groupingRecord = new GroupingRecord(dataItem);
+                groupingRecord = new GroupingRecord(dataItem, 0, grouping.field, value);
             }
 
             if (groupingRecord) {
                 groupingRecord.value = value;
+                groupingRecord.index = 0;
                 set.add(value);
                 result.push(groupingRecord);
             }
         }
 
         return result;
+    }
+
+    getGroupingChildren(groupingRecord) {
+        if (groupingRecord.children.length > 0) {
+            return groupingRecord.children;
+        }
+
+        const set = new Set();
+        const result = [];
+
+        // get child grouping record
+        const grouping = this.groupingOrder.getChildGroupingFromRecord(groupingRecord);
+        const childFilter = this.getFilterFromGroupingItem(grouping);
+
+
+        return result;
+    }
+
+    getFilterFromGroupingItem(groupingRecord) {
+        const filter = new Filter();
+        let record = groupingRecord;
+
+        do {
+            filter.add(new EqualsFilterItem(record.filterField, record.value));
+            record = record.parent;
+        } while(record);
+
+        return filter;
     }
 
 }

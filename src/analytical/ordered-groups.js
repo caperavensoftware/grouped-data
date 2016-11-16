@@ -27,6 +27,17 @@ export class OrderGroup {
         this.groupings = [];
     }
 
+    getChildGroupingFromRecord(groupingRecord) {
+        const index = groupingRecord.index;
+        const childIndex = index + 1;
+
+        if (childIndex > this.groupings.length - 1) {
+            return null;
+        }
+
+        return this.groupings[childIndex];
+    }
+
     add(item) {
         item.parent = null;
 
@@ -107,6 +118,7 @@ export class OrderGroup {
         this.groupings = [];
     }
 
+    // Are these groupings part of the model and if not remove those items not on the model.
     validateFromModel(model) {
         if (this.groupings.length === 0) {
             return;
