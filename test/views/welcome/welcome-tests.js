@@ -13,6 +13,6 @@ describe('Welcome Tests', function() {
     });
 
     it('not constructor', function() {
-        expect(() => welcome()).to.throw("Cannot call a class as a function");
+        expect(() => Welcome()).to.throw("Cannot call a class as a function");
     });
 });
