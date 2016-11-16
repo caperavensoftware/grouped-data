@@ -1,0 +1,11 @@
+{
+  "cacheId": "untitled",
+  "staticFileGlobs": [
+    "index.html",
+    "config.js",
+    "images/**/*.*",
+    "styles/**/*.css",
+    "app/src/**/*.*",
+    "jspm_packages/system.js"
+  ]
+}

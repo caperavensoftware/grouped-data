@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Application Title</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="manifest" href="./manifest.json">
+    <script src="./jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+</head>
+<body aurelia-app="main">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js', {scope: '/'})
+                    .then(function(reg) {
+                        console.log('Registration succeeded. Scope is ' + reg.scope);
+                    }).catch(function(error) {
+                console.log('Registration failed with ' + error);
+            });
+        }
+
+        System.import('aurelia-bootstrapper');
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "App Name",
+  "short_name": "App Name",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Application created with build-utilities",
+  "lang": "en-US",
+  "orientation": "any",
+  "theme_color": "#EF6100",
+  "icons": [
+    {
+      "src": "images/app.svg",
+      "sizes": "72x72 96x96 128x128 256x256"
+    }
+  ]
+}
