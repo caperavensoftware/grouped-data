@@ -117,8 +117,9 @@ export class AnalyticalDataManager {
 
         // get child grouping record
         const grouping = this.groupingOrder.getChildGroupingFromRecord(groupingRecord);
-        const childFilter = this.getFilterFromGroupingItem(grouping);
+        const groupFilter = this.getFilterFromGroupingItem(groupingRecord);
 
+        console.log(groupFilter);
 
         return result;
     }

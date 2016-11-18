@@ -31,7 +31,7 @@ export class GroupingRecord extends RecordBase {
 
     constructor(model, index, filterField, value) {
         super(model, index, filterField, value);
-        children = [];
+        this.children = [];
     }
 
     dispose() {
