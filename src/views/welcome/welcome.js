@@ -26,10 +26,14 @@ export class Welcome {
         this.analytical.groupingOrder.add(developmentStatusGrouping);
         this.analytical.groupingOrder.add(assetTypeIdGrouping);
 
-        const assetTypeIdCollection = this.analytical.getRootGroupingRecords();
+        this.analytical.getRootGroupingRecords().then(assetTypeIdCollection => {
+            this.analytical.getGroupingChildren(assetTypeIdCollection[0]).then(result => {
+                console.log(result);
+            });
 
-        console.log(assetTypeIdCollection);
-
-        this.analytical.getGroupingChildren(assetTypeIdCollection[0]);
+            this.analytical.getGroupingChildren(assetTypeIdCollection[1]).then(result => {
+                console.log(result);
+            });
+        });
     }
 }
